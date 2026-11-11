@@ -4,7 +4,7 @@ import type { Locale } from "./routes";
 const nb = {
   meta: {
     homeTitle: "Coostina Bar & Restaurant, karibisk street food og scene på Grünerløkka",
-    homeDescription: "Karibisk street food, karaoke, open mic, stand-up og fotball på storskjerm i Trondheimsveien 4A på Grünerløkka. Åpent alle dager 13–03. Bestill bord på nett.",
+    homeDescription: "Karibisk street food, karaoke, open mic, stand-up og fotball på storskjerm i Trondheimsveien 4A på Grünerløkka. Åpent alle dager 14–03. Bestill bord på nett.",
     menuTitle: "Meny",
     menuDescription: "Se hele menyen med priser og allergener. Filtrer bort det du ikke tåler, og finn vegetar- og glutenfrie retter.",
     bookTitle: "Bestill bord",
@@ -88,7 +88,7 @@ const nb = {
     heading: "Velkommen til Coostina på Grünerløkka",
     ctaBook: "Bestill bord",
     ctaMenu: "Se menyen",
-    intro: "Jerk chicken, saltfish cakes og småretter til deling, karaoke og open mic på scenen, og kampen på storskjerm. Et nabolagssted i Trondheimsveien, åpent fra 13 til 03 hver dag.",
+    intro: "Jerk chicken, saltfish cakes og småretter til deling, karaoke og open mic på scenen, og kampen på storskjerm. Et nabolagssted i Trondheimsveien, åpent fra 14 til 03 hver dag.",
     openDaily: "Åpent alle dager",
     openSummary: (open: string, weekdayClose: string, weekendClose: string) =>
       weekdayClose === weekendClose ? `Alle dager ${open}–${weekdayClose}` : `Mandag til torsdag ${open}–${weekdayClose} · fredag til søndag ${open}–${weekendClose}`,
@@ -355,7 +355,7 @@ export type Dictionary = typeof nb;
 const en: Dictionary = {
   meta: {
     homeTitle: "Coostina Bar & Restaurant, Caribbean street food and a stage in Grünerløkka",
-    homeDescription: "Caribbean street food, karaoke, open mic, stand-up and football on the big screen at Trondheimsveien 4A in Grünerløkka, Oslo. Open daily 13:00–03:00. Book a table online.",
+    homeDescription: "Caribbean street food, karaoke, open mic, stand-up and football on the big screen at Trondheimsveien 4A in Grünerløkka, Oslo. Open daily 14:00–03:00. Book a table online.",
     menuTitle: "Menu",
     menuDescription: "See the full menu with prices and allergens. Filter out what you can't eat, and find vegetarian and gluten-free dishes.",
     bookTitle: "Book a table",
@@ -439,7 +439,7 @@ const en: Dictionary = {
     heading: "Welcome to Coostina in Grünerløkka",
     ctaBook: "Book a table",
     ctaMenu: "See the menu",
-    intro: "Jerk chicken, saltfish cakes and small plates to share, karaoke and open mic on stage, and the match on the big screen. A neighbourhood place on Trondheimsveien, open 13:00 to 03:00 every day.",
+    intro: "Jerk chicken, saltfish cakes and small plates to share, karaoke and open mic on stage, and the match on the big screen. A neighbourhood place on Trondheimsveien, open 14:00 to 03:00 every day.",
     openDaily: "Open every day",
     openSummary: (open, weekdayClose, weekendClose) =>
       weekdayClose === weekendClose ? `Every day ${open}–${weekdayClose}` : `Monday to Thursday ${open}–${weekdayClose} · Friday to Sunday ${open}–${weekendClose}`,
