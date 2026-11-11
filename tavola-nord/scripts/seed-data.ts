@@ -26,6 +26,15 @@ const rows: Row[] = [
 
   // Sharing
   ["sharing", "Island Feast for Two", "Velg fire valgfrie småretter, til deling for to.", "Choose any four plates, to share between two.", 449, [], { featured: true }, "antipasti"],
+
+  // Alcohol-free drinks. SUGGESTED drinks and prices: the owner confirms them, or changes them in /admin.
+  // Never add drinks with alcohol to the website: Norwegian law (alkoholloven § 9-2) bans advertising them.
+  ["drinks", "Sorrel", "Hjemmelaget karibisk hibiskusdrikk med ingefær, kanel og nellik. Serveres iskald.", "House-made Caribbean hibiscus drink with ginger, cinnamon and clove. Served ice cold.", 49, [], { v: true, gf: true }, "cocktail"],
+  ["drinks", "Ginger Beer", "Sterk, alkoholfri ingefærbrus.", "Fiery, alcohol-free ginger soda.", 45, [], { v: true, gf: true }, "cocktail"],
+  ["drinks", "Tropical Smoothie", "Mango, ananas og pasjonsfrukt, laget fersk når du bestiller.", "Mango, pineapple and passion fruit, made fresh when you order.", 69, [], { v: true, gf: true }, "cocktail"],
+  ["drinks", "Mango & Passion Juice", "Mango- og pasjonsfruktjuice med is og lime.", "Mango and passion fruit juice with ice and lime.", 45, [], { v: true, gf: true }, "cocktail"],
+  ["drinks", "Kokosvann", "Kaldt kokosvann.", "Chilled coconut water.", 45, [], { v: true, gf: true }, "cocktail"],
+  ["drinks", "Brus og vann", "Spør om utvalget.", "Ask what we have.", 35, [], { v: true, gf: true }, "cocktail"],
 ];
 
 export const demoMenuItems = rows.map(([category, name, descriptionNb, descriptionEn, priceNok, allergens, flags, art]) => ({
@@ -41,8 +50,9 @@ export const demoMenuItems = rows.map(([category, name, descriptionNb, descripti
   art,
 }));
 
+/** SUGGESTED party menus built from the menu card. The owner confirms dishes and prices before isDemo is set to false. */
 export const demoEventMenus = [
-  { nameNb: "Pizzafest", nameEn: "Pizza party", priceNok: 349, starter: "Bruschetta al Pomodoro", main: "Utvalg av pizza til deling", dessert: "Tiramisù" },
-  { nameNb: "Trattoria", nameEn: "Trattoria", priceNok: 449, starter: "Tagliere Misto", main: "Tagliatelle al Ragù eller Risotto ai Funghi", dessert: "Panna Cotta" },
-  { nameNb: "Coostina-menyen", nameEn: "The Coostina menu", priceNok: 549, starter: "Burrata", main: "Linguine ai Frutti di Mare", dessert: "Tiramisù" },
+  { nameNb: "Island Party", nameEn: "Island Party", priceNok: 349, starter: "Saltfish Cakes", main: "Jerk Chicken med rice & peas", dessert: "Mango Salad" },
+  { nameNb: "Caribbean Feast", nameEn: "Caribbean Feast", priceNok: 449, starter: "Saltfish Cakes og Island Wings", main: "Jerk Chicken eller Macaroni Pie", dessert: "Mango Salad" },
+  { nameNb: "Coostina-menyen", nameEn: "The Coostina menu", priceNok: 549, starter: "Chicken Gumbo og Saltfish Cakes", main: "Jerk Chicken og Macaroni Pie til deling", dessert: "Mango Salad og Tropical Smoothie" },
 ];
