@@ -1,6 +1,7 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { z } from "zod";
 import { brand } from "@/config/brand";
+import { answerWithoutAi } from "@/lib/chat-fallback";
 import { buildChatKnowledge } from "@/lib/chat-knowledge";
 import { jsonError, readJson } from "@/lib/http";
 import { allowRequest, clientKey } from "@/lib/rate-limit";
@@ -52,14 +53,19 @@ export async function POST(request: Request) {
   if (!parsed.success) return jsonError("validation", 400);
   const { locale, messages: history } = parsed.data;
 
-  // Without a key the widget offers the phone number instead.
-  if (!process.env.ANTHROPIC_API_KEY) return jsonError("unavailable", 503);
-
   try {
     if (!(await allowRequest("chat", clientKey(request.headers), 20, 600))) return jsonError("rate_limited", 429);
   } catch (error) {
     console.error("[chat] rate limit", error);
-    return jsonError("server", 500);
+  }
+
+  const question = history.at(-1)?.content ?? "";
+
+  // Without a key, answer from the website's own facts so the chat still works.
+  if (!process.env.ANTHROPIC_API_KEY) {
+    const answer = await answerWithoutAi(locale, question).catch(() => `${brand.phone.display}`);
+    const lines = [{ type: "text", text: answer }, { type: "done" }].map((e) => JSON.stringify(e)).join("\n") + "\n";
+    return new Response(lines, { headers: { "Content-Type": "application/x-ndjson; charset=utf-8", "Cache-Control": "no-store" } });
   }
 
   const knowledge = await buildChatKnowledge(locale).catch((error) => {
@@ -74,6 +80,7 @@ export async function POST(request: Request) {
     async start(controller) {
       const send = (event: ChatEvent) => controller.enqueue(encoder.encode(`${JSON.stringify(event)}\n`));
       const sources = new Map<string, string>();
+      let sentText = false;
       const messages: Anthropic.Beta.BetaMessageParam[] = history.map((m) => ({ role: m.role, content: m.content }));
 
       try {
@@ -102,7 +109,10 @@ export async function POST(request: Request) {
 
           for await (const event of response) {
             if (event.type === "content_block_start" && event.content_block.type === "server_tool_use") send({ type: "searching" });
-            if (event.type === "content_block_delta" && event.delta.type === "text_delta") send({ type: "text", text: event.delta.text });
+            if (event.type === "content_block_delta" && event.delta.type === "text_delta") {
+              sentText = true;
+              send({ type: "text", text: event.delta.text });
+            }
           }
 
           const message = await response.finalMessage();
@@ -121,7 +131,12 @@ export async function POST(request: Request) {
       } catch (error) {
         if (!request.signal.aborted) {
           console.error("[chat]", error instanceof Anthropic.APIError ? `${error.status} ${error.message}` : error);
-          send({ type: "error", error: "server" });
+          // If the AI fails before saying anything (no credit, bad key), answer from the website facts instead.
+          const answer = sentText ? null : await answerWithoutAi(locale, question).catch(() => null);
+          if (answer) {
+            send({ type: "text", text: answer });
+            send({ type: "done" });
+          } else send({ type: "error", error: "server" });
         }
       } finally {
         controller.close();
