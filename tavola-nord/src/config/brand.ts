@@ -27,7 +27,9 @@ export const brand = {
   eventsPhone: { display: "944 40 443", href: "tel:+4794440443" },
   /** No public address found. Set it to show email links across the site. */
   email: null as string | null,
-  mapsUrl: "https://www.google.com/maps/search/?api=1&query=Trondheimsveien+4A,+0560+Oslo" as string | null,
+  mapsUrl: "https://www.google.com/maps/search/?api=1&query=Coostina+Bar+%26+Restaurant,+Trondheimsveien+4A,+0560+Oslo" as string | null,
+  /** Opens Coostina's Google profile, where guests read and write reviews. */
+  googleReviewsUrl: "https://www.google.com/search?q=Coostina+Bar+%26+Restaurant+Trondheimsveien+4A+Oslo+anmeldelser" as string | null,
   /**
    * Shown as icons in the footer and the contact section. Paste each profile address into href,
    * such as "https://www.instagram.com/coostina". Icons without an address show faded and aren't links.
