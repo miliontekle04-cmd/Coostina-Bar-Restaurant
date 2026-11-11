@@ -1,7 +1,8 @@
 /**
  * Everything specific to the business lives here.
  * Sources: Brønnøysund via proff.no (company, address, phone) and norgeguide.com (hours).
- * Check the opening hours and the menu with the restaurant before launch, then set `isDemo` to false.
+ * Opening hours confirmed by the owner (Nov 2026): 13:00 to 03:00 every day.
+ * Set `isDemo` to false once the owner has confirmed the party menus and drink prices in seed-data.ts.
  */
 
 export type DayHours = { open: string; close: string } | null;
@@ -32,8 +33,8 @@ export const brand = {
    * such as "https://www.instagram.com/coostina". Icons without an address show faded and aren't links.
    */
   socials: [
-    { platform: "instagram", label: "Instagram", href: null },
-    { platform: "facebook", label: "Facebook", href: null },
+    { platform: "instagram", label: "Instagram", href: "https://www.instagram.com/coostina_oslo" },
+    { platform: "facebook", label: "Facebook", href: "https://www.facebook.com/coostina.bar.og.restaurant" },
     { platform: "tiktok", label: "TikTok", href: null },
   ] as Social[],
   /** Real reviews only, with permission to show them. The section stays hidden while this is empty. */
@@ -41,20 +42,26 @@ export const brand = {
   /** Enhanced from the restaurant's own photos. The first one opens the home page slideshow. */
   photos: [
     { src: "/photos/dining-room.jpg", alt: { nb: "Spisesalen med kobberlamper og store vinduer mot Trondheimsveien", en: "The dining room with copper lamps and big windows onto Trondheimsveien" } },
-    { src: "/photos/bar.jpg", alt: { nb: "Baren med lyssatte hyller, fatøl og ballonger til feiring", en: "The bar with lit shelves, draught beer and balloons for a celebration" } },
     { src: "/photos/live-sport.jpg", alt: { nb: "Fotballkamp på storskjerm i lokalet", en: "A football match on the big screen" } },
   ] as Photo[],
-  /** A 20-second promo with the logo, shown on the home page. */
-  promoVideo: { src: "/video/coostina-promo-wide.mp4", poster: "/video/coostina-promo-wide.jpg" } as { src: string; poster: string } | null,
-  /** Index 0 is Sunday. null means closed. "24:00" means midnight. */
+  /**
+   * A short promo shown on the home page. The old film advertised pizza, cocktails, wine and draught beer,
+   * which breaks the Norwegian ban on alcohol advertising (alkoholloven § 9-2), so it is switched off.
+   * Add a new film without alcohol here, such as { src: "/video/new.mp4", poster: "/video/new.jpg" }.
+   */
+  promoVideo: null as { src: string; poster: string } | null,
+  /**
+   * Index 0 is Sunday. null means closed. "24:00" means midnight.
+   * A closing time past 24:00 runs into the next morning: "27:00" is 03:00 the night after.
+   */
   hours: [
-    { open: "11:00", close: "24:00" },
-    { open: "11:00", close: "23:00" },
-    { open: "11:00", close: "23:00" },
-    { open: "11:00", close: "23:00" },
-    { open: "11:00", close: "23:00" },
-    { open: "11:00", close: "24:00" },
-    { open: "11:00", close: "24:00" },
+    { open: "13:00", close: "27:00" },
+    { open: "13:00", close: "27:00" },
+    { open: "13:00", close: "27:00" },
+    { open: "13:00", close: "27:00" },
+    { open: "13:00", close: "27:00" },
+    { open: "13:00", close: "27:00" },
+    { open: "13:00", close: "27:00" },
   ] as DayHours[],
   timeZone: "Europe/Oslo",
   booking: {
@@ -69,6 +76,8 @@ export const brand = {
     minLeadMinutes: 60,
     /** The last sitting starts this long before closing. */
     lastSeatingBeforeClose: 90,
+    /** Online bookings stop at this time, even when the doors stay open later. Keeps every booking on its own date. */
+    lastSeatingTime: "23:00",
   },
   events: {
     minGuests: 10,
@@ -80,7 +89,9 @@ export const brand = {
   },
 };
 
-/** "24:00" reads as midnight to guests. */
+/** "24:00" reads as midnight to guests, and "27:00" as 03:00. */
 export function displayTime(time: string): string {
-  return time === "24:00" ? "00:00" : time;
+  const [h = 0, m = 0] = time.split(":").map(Number);
+  if (h < 24) return time;
+  return `${String(h - 24).padStart(2, "0")}:${String(m).padStart(2, "0")}`;
 }
