@@ -48,13 +48,13 @@ export const brand = {
   ] as Photo[],
   /**
    * The slideshow behind the home page heading. Free stock photos from Pexels (pexels.com/license),
-   * cropped to 2:1 from the top so no alcohol shows (alkoholloven § 9-2).
+   * cropped to 2:1 so no alcohol shows (alkoholloven § 9-2).
    * Falls back to `photos` when empty. Local files in /public/photos work here too.
    */
   heroPhotos: [
     { src: "https://images.pexels.com/photos/9961871/pexels-photo-9961871.jpeg?auto=compress&cs=tinysrgb&fit=crop&crop=top&w=2400&h=1200", alt: { nb: "Glade venner deler mat og ler sammen ved bordet", en: "Happy friends sharing food and laughing at the table" } },
     { src: "https://images.pexels.com/photos/9008830/pexels-photo-9008830.jpeg?auto=compress&cs=tinysrgb&fit=crop&crop=top&w=2400&h=1200", alt: { nb: "Venner synger karaoke foran mikrofonen", en: "Friends singing karaoke at the microphone" } },
-    { src: "https://images.pexels.com/photos/14856235/pexels-photo-14856235.jpeg?auto=compress&cs=tinysrgb&fit=crop&crop=top&w=2400&h=1200", alt: { nb: "Supportere jubler for fotballkampen på storskjerm", en: "Fans cheering the football match on the big screen" } },
+    { src: "https://images.pexels.com/photos/9005494/pexels-photo-9005494.jpeg?auto=compress&cs=tinysrgb&fit=crop&crop=bottom&w=2400&h=1200", alt: { nb: "Venner danser og ler sammen i baren", en: "Friends dancing and laughing together in the bar" } },
   ] as Photo[],
   /**
    * A short promo shown on the home page. The old film advertised pizza, cocktails, wine and draught beer,
