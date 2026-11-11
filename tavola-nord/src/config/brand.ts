@@ -1,7 +1,7 @@
 /**
  * Everything specific to the business lives here.
  * Sources: Brønnøysund via proff.no (company, address, phone) and norgeguide.com (hours).
- * Opening hours confirmed by the owner (11 Nov 2026): Monday to Thursday 14:00 to 01:00, Friday to Sunday 14:00 to 03:00.
+ * Opening hours confirmed by the owner (11 Nov 2026): Sunday to Thursday 14:00 to 01:00, Friday and Saturday 14:00 to 03:00.
  * `isDemo` is false: the owner confirmed the opening hours (Nov 2026), so the "provisional" footer note is gone.
  */
 
@@ -72,7 +72,7 @@ export const brand = {
    * A closing time past 24:00 runs into the next morning: "27:00" is 03:00 the night after.
    */
   hours: [
-    { open: "14:00", close: "27:00" }, // Sunday
+    { open: "14:00", close: "25:00" }, // Sunday
     { open: "14:00", close: "25:00" }, // Monday
     { open: "14:00", close: "25:00" }, // Tuesday
     { open: "14:00", close: "25:00" }, // Wednesday
