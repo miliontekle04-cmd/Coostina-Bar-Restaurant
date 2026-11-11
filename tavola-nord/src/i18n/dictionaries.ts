@@ -4,7 +4,7 @@ import type { Locale } from "./routes";
 const nb = {
   meta: {
     homeTitle: "Coostina Bar & Restaurant, karibisk street food og scene på Grünerløkka",
-    homeDescription: "Karibisk street food, karaoke, open mic, stand-up og fotball på storskjerm i Trondheimsveien 4A på Grünerløkka. Åpent man–tor 14–01, fre–søn 14–03. Bestill bord på nett.",
+    homeDescription: "Karibisk street food, karaoke, open mic, stand-up og fotball på storskjerm i Trondheimsveien 4A på Grünerløkka. Åpent søn–tor 14–01, fre–lør 14–03. Bestill bord på nett.",
     menuTitle: "Meny",
     menuDescription: "Se hele menyen med priser og allergener. Filtrer bort det du ikke tåler, og finn vegetar- og glutenfrie retter.",
     bookTitle: "Bestill bord",
@@ -56,8 +56,8 @@ const nb = {
   footer: {
     tagline: "Karibisk street food og scene for alle i Trondheimsveien 4A, midt på Grünerløkka.",
     explore: "Utforsk",
-    weekdays: "Man–tor",
-    weekend: "Fre–søn",
+    weekdays: "Søn–tor",
+    weekend: "Fre–lør",
     openDaily: "Åpent alle dager",
     follow: "Følg oss",
     followOn: (platform: string) => `Følg Coostina på ${platform}`,
@@ -91,14 +91,14 @@ const nb = {
     intro: "Jerk chicken, saltfish cakes og småretter til deling, karaoke og open mic på scenen, og kampen på storskjerm. Et nabolagssted i Trondheimsveien, åpent alle dager fra kl. 14.",
     openDaily: "Åpent alle dager",
     openSummary: (open: string, weekdayClose: string, weekendClose: string) =>
-      weekdayClose === weekendClose ? `Alle dager ${open}–${weekdayClose}` : `Mandag til torsdag ${open}–${weekdayClose} · fredag til søndag ${open}–${weekendClose}`,
+      weekdayClose === weekendClose ? `Alle dager ${open}–${weekdayClose}` : `Søndag til torsdag ${open}–${weekdayClose} · fredag og lørdag ${open}–${weekendClose}`,
     menuEyebrow: "Menyen",
     menuHeading: "Småretter fra øyene, laget for deling",
     menuBody: "Karibisk street food med scotch bonnet, allehånde og timian. Velg fire småretter til Island Feast for to. Alle allergener står i menyen, og kjøkkenet tilpasser gjerne.",
     menuLink: "Utforsk menyen",
     barEyebrow: "Alkoholfritt fra øyene",
     barHeading: "Tropiske smaker og kamp på storskjerm",
-    barBody: "Til maten serverer vi alkoholfrie drikker med smak av Karibia. Bli for kampen, open mic eller karaoke. Vi holder åpent til 01 mandag til torsdag og til 03 fredag til søndag.",
+    barBody: "Til maten serverer vi alkoholfrie drikker med smak av Karibia. Bli for kampen, open mic eller karaoke. Vi holder åpent til 01 søndag til torsdag og til 03 fredag og lørdag.",
     barPoints: [
       { h: "Sorrel og ginger beer", p: "Hjemmelaget sorrel med ingefær og kanel, og sterk alkoholfri ginger beer." },
       { h: "Tropiske smoothies", p: "Mango, ananas og pasjonsfrukt, laget fersk når du bestiller." },
@@ -355,7 +355,7 @@ export type Dictionary = typeof nb;
 const en: Dictionary = {
   meta: {
     homeTitle: "Coostina Bar & Restaurant, Caribbean street food and a stage in Grünerløkka",
-    homeDescription: "Caribbean street food, karaoke, open mic, stand-up and football on the big screen at Trondheimsveien 4A in Grünerløkka, Oslo. Open Mon–Thu 14:00–01:00, Fri–Sun 14:00–03:00. Book a table online.",
+    homeDescription: "Caribbean street food, karaoke, open mic, stand-up and football on the big screen at Trondheimsveien 4A in Grünerløkka, Oslo. Open Sun–Thu 14:00–01:00, Fri–Sat 14:00–03:00. Book a table online.",
     menuTitle: "Menu",
     menuDescription: "See the full menu with prices and allergens. Filter out what you can't eat, and find vegetarian and gluten-free dishes.",
     bookTitle: "Book a table",
@@ -407,8 +407,8 @@ const en: Dictionary = {
   footer: {
     tagline: "Caribbean street food and a stage for everyone at Trondheimsveien 4A, in the heart of Grünerløkka.",
     explore: "Explore",
-    weekdays: "Mon–Thu",
-    weekend: "Fri–Sun",
+    weekdays: "Sun–Thu",
+    weekend: "Fri–Sat",
     openDaily: "Open every day",
     follow: "Follow us",
     followOn: (platform) => `Follow Coostina on ${platform}`,
@@ -442,14 +442,14 @@ const en: Dictionary = {
     intro: "Jerk chicken, saltfish cakes and small plates to share, karaoke and open mic on stage, and the match on the big screen. A neighbourhood place on Trondheimsveien, open every day from 14:00.",
     openDaily: "Open every day",
     openSummary: (open, weekdayClose, weekendClose) =>
-      weekdayClose === weekendClose ? `Every day ${open}–${weekdayClose}` : `Monday to Thursday ${open}–${weekdayClose} · Friday to Sunday ${open}–${weekendClose}`,
+      weekdayClose === weekendClose ? `Every day ${open}–${weekdayClose}` : `Sunday to Thursday ${open}–${weekdayClose} · Friday and Saturday ${open}–${weekendClose}`,
     menuEyebrow: "The menu",
     menuHeading: "Island small plates, made for sharing",
     menuBody: "Caribbean street food with scotch bonnet, allspice and thyme. Pick any four plates for the Island Feast for Two. Every allergen is on the menu, and the kitchen is happy to adapt.",
     menuLink: "Explore the menu",
     barEyebrow: "Alcohol-free island drinks",
     barHeading: "Tropical flavours and the match on the big screen",
-    barBody: "With the food we serve alcohol-free drinks with a taste of the Caribbean. Stay for the match, open mic or karaoke. We are open until 01:00 Monday to Thursday and until 03:00 Friday to Sunday.",
+    barBody: "With the food we serve alcohol-free drinks with a taste of the Caribbean. Stay for the match, open mic or karaoke. We are open until 01:00 Sunday to Thursday and until 03:00 on Friday and Saturday.",
     barPoints: [
       { h: "Sorrel and ginger beer", p: "House-made sorrel with ginger and cinnamon, and a fiery alcohol-free ginger beer." },
       { h: "Tropical smoothies", p: "Mango, pineapple and passion fruit, made fresh when you order." },
