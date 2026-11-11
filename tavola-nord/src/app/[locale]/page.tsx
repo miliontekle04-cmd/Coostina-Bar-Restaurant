@@ -253,6 +253,13 @@ export default async function HomePage({ params }: Props) {
                 </a>
               </p>
             ) : null}
+            {brand.googleReviewsUrl ? (
+              <p className="mt-1">
+                <a className="link" href={brand.googleReviewsUrl} rel="noopener noreferrer">
+                  {t.home.googleReviews}
+                </a>
+              </p>
+            ) : null}
             <p className="mt-4 text-lg">
               <a className="link" href={brand.phone.href}>
                 {brand.phone.display}
