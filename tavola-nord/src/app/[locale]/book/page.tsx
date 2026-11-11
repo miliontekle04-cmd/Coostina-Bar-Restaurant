@@ -51,7 +51,7 @@ export default async function BookPage({ params, searchParams }: Props) {
           maxDate={maxDate}
         />
       </div>
-      <PlateArt art="pizza" className="hidden w-full self-start lg:block" />
+      <PlateArt art="meat" className="hidden w-full self-start lg:block" />
     </div>
   );
 }
