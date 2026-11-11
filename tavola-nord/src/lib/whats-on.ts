@@ -1,11 +1,14 @@
 import { brand, displayTime, type DayHours } from "@/config/brand";
-import { addDays, computeAvailability, toMinutes, weekdayOf } from "./booking";
+import { addDays, carryOverMinutes, computeAvailability, toMinutes, weekdayOf } from "./booking";
 import { getBookingsForDate, isDateClosed } from "./queries";
 
 export type DayStatus = { state: "open"; close: string } | { state: "later"; open: string } | { state: "closed" };
 
 /** Whether the doors are open right now, open later today, or shut for the day. */
 export function dayStatus(now: { date: string; minutes: number }, hours: DayHours[] = brand.hours, closedToday = false): DayStatus {
+  // Still open from the night before, such as 01:30 when yesterday closes at 03:00.
+  const carry = carryOverMinutes(now.date, hours);
+  if (now.minutes < carry) return { state: "open", close: displayTime(`${24 + Math.floor(carry / 60)}:${String(carry % 60).padStart(2, "0")}`) };
   const day = hours[weekdayOf(now.date)];
   if (!day || closedToday) return { state: "closed" };
   if (now.minutes < toMinutes(day.open)) return { state: "later", open: day.open };

@@ -58,7 +58,8 @@ export function restaurantNow(at: Date = new Date(), timeZone = brand.timeZone):
 export function slotTimes(hours: DayHours, rules: BookingRules = brand.booking): string[] {
   if (!hours) return [];
   const first = toMinutes(hours.open);
-  const last = toMinutes(hours.close) - rules.lastSeatingBeforeClose;
+  const latest = "lastSeatingTime" in rules && rules.lastSeatingTime ? toMinutes(rules.lastSeatingTime) : Infinity;
+  const last = Math.min(toMinutes(hours.close) - rules.lastSeatingBeforeClose, latest);
   const times: string[] = [];
   for (let t = first; t <= last; t += rules.slotMinutes) times.push(fromMinutes(t));
   return times;
@@ -116,7 +117,15 @@ export function canCancel(date: string, time: string, now: { date: string; minut
   return toMinutes(time) > now.minutes;
 }
 
+/** Minutes still open after midnight from the night before, or 0. */
+export function carryOverMinutes(date: string, hours: DayHours[] = brand.hours): number {
+  const yesterday = hours[weekdayOf(addDays(date, -1))];
+  if (!yesterday) return 0;
+  return Math.max(0, toMinutes(yesterday.close) - 24 * 60);
+}
+
 export function isOpenNow(now: { date: string; minutes: number }, hours: DayHours[] = brand.hours): boolean {
+  if (now.minutes < carryOverMinutes(now.date, hours)) return true;
   const day = hours[weekdayOf(now.date)];
   if (!day) return false;
   return now.minutes >= toMinutes(day.open) && now.minutes < toMinutes(day.close);

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { brand } from "@/config/brand";
+import { brand, displayTime } from "@/config/brand";
 import { routes, type Locale, type RouteKey } from "@/i18n/routes";
 
 export function siteUrl(): string {
@@ -38,7 +38,7 @@ export function restaurantJsonLd(locale: Locale) {
     url: `${siteUrl()}${routes.home[locale]}`,
     menu: `${siteUrl()}${routes.menu[locale]}`,
     alternateName: brand.fullName,
-    servesCuisine: ["Italian", "Pizza"],
+    servesCuisine: ["Caribbean"],
     priceRange: "$$",
     acceptsReservations: true,
     telephone: brand.phone.href.replace("tel:", ""),
@@ -54,7 +54,7 @@ export function restaurantJsonLd(locale: Locale) {
     },
     openingHoursSpecification: brand.hours.flatMap((hours, index) =>
       hours
-        ? [{ "@type": "OpeningHoursSpecification", dayOfWeek: schemaDays[index], opens: hours.open, closes: hours.close === "24:00" ? "23:59" : hours.close }]
+        ? [{ "@type": "OpeningHoursSpecification", dayOfWeek: schemaDays[index], opens: hours.open, closes: hours.close === "24:00" ? "23:59" : displayTime(hours.close) }]
         : [],
     ),
   };
