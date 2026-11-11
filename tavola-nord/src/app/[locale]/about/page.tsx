@@ -104,6 +104,13 @@ export default async function AboutPage({ params }: Props) {
               </a>
             </p>
           ) : null}
+          {brand.googleReviewsUrl ? (
+            <p className="mt-2">
+              <a className="link" href={brand.googleReviewsUrl} rel="noopener noreferrer">
+                {t.home.googleReviews}
+              </a>
+            </p>
+          ) : null}
         </div>
       </section>
 
