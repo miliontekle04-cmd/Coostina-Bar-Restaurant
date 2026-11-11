@@ -1,0 +1,365 @@
+@import "tailwindcss";
+
+/*
+  Coostina design tokens.
+  A candle-lit trattoria: cream linen, espresso ink, wine red and brass.
+  The token names are kept from the original theme so every page picks the palette up.
+  Mist is the cream ground, lagoon the dark room colour, oil the brass accent.
+*/
+@theme {
+  --color-mist: #f5eee4;
+  --color-paper: #fbf8f3;
+  --color-ink: #231a15;
+  --color-ink-soft: #6b5a4e;
+  --color-tomato: #8e2b22;
+  --color-oil: #c9a35b;
+  --color-basil: #4f5d2f;
+  --color-lagoon: #1c1814;
+  --color-line: #231a1526;
+
+  --font-display: var(--font-playfair), Georgia, serif;
+  --font-sans: var(--font-schibsted), system-ui, sans-serif;
+
+  --radius-field: 0.625rem;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    /* Keeps focused fields clear of the floating dock. */
+    scroll-padding-bottom: 6rem;
+  }
+  body {
+    background: var(--color-mist);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.55;
+  }
+  h1,
+  h2,
+  h3 {
+    line-height: 1.12;
+    text-wrap: balance;
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-lagoon);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+  .on-dark :focus-visible {
+    outline-color: var(--color-oil);
+  }
+  a {
+    text-underline-offset: 0.18em;
+  }
+}
+
+@layer components {
+  /* Three dots that bob while the chat assistant writes. */
+  .chat-dots {
+    display: inline-flex;
+    gap: 3px;
+  }
+  .chat-dots span {
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: currentColor;
+    animation: chat-dot 1.1s ease-in-out infinite;
+  }
+  .chat-dots span:nth-child(2) {
+    animation-delay: 0.15s;
+  }
+  .chat-dots span:nth-child(3) {
+    animation-delay: 0.3s;
+  }
+  @keyframes chat-dot {
+    0%,
+    60%,
+    100% {
+      opacity: 0.35;
+      transform: translateY(0);
+    }
+    30% {
+      opacity: 1;
+      transform: translateY(-3px);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .chat-dots span {
+      animation: none;
+    }
+  }
+
+  .display {
+    font-family: var(--font-display);
+    font-weight: 500;
+    letter-spacing: -0.005em;
+  }
+
+  /* Small spaced capitals above headings, the way a printed menu labels its sections. */
+  .eyebrow {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+
+  /* Hero photos: each fades in, drifts closer, and hands over to the next. Duration and delay are set inline. */
+  .hero-slide {
+    opacity: 0;
+    animation-name: hero-slide;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+  @keyframes hero-slide {
+    0% {
+      opacity: 0;
+      transform: scale(1.02);
+    }
+    6% {
+      opacity: 1;
+    }
+    33% {
+      opacity: 1;
+    }
+    40% {
+      opacity: 0;
+      transform: scale(1.12);
+    }
+    100% {
+      opacity: 0;
+      transform: scale(1.12);
+    }
+  }
+
+  /* A row that scrolls sideways forever. The list is rendered twice so the loop is seamless. */
+  .marquee {
+    display: flex;
+    width: max-content;
+    animation: marquee 60s linear infinite;
+  }
+  .marquee:hover,
+  .marquee:focus-within {
+    animation-play-state: paused;
+  }
+  @keyframes marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  .page {
+    margin-inline: auto;
+    width: 100%;
+    max-width: 78rem;
+    padding-inline: 1rem;
+  }
+  @media (min-width: 40rem) {
+    .page {
+      padding-inline: 2rem;
+    }
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 3rem;
+    padding: 0.625rem 1.5rem;
+    border-radius: 999px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition:
+      background-color 0.15s,
+      color 0.15s,
+      transform 0.1s;
+  }
+  .btn:active {
+    transform: translateY(1px);
+  }
+  .btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  .btn-primary {
+    background: var(--color-tomato);
+    color: #fff;
+  }
+  .btn-primary:hover:not(:disabled) {
+    background: #6f1f18;
+  }
+  .btn-ink {
+    background: var(--color-ink);
+    color: var(--color-mist);
+  }
+  .btn-ink:hover:not(:disabled) {
+    background: #3d2f27;
+  }
+  .btn-oil {
+    background: var(--color-oil);
+    color: var(--color-ink);
+  }
+  .btn-oil:hover:not(:disabled) {
+    background: #dcbb7b;
+  }
+  .btn-outline {
+    border-color: currentColor;
+    background: transparent;
+  }
+  .btn-outline:hover:not(:disabled) {
+    background: #231a1512;
+  }
+  .on-dark .btn-outline:hover:not(:disabled) {
+    background: #ffffff24;
+  }
+
+  .field-label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+  }
+  .field-hint {
+    color: var(--color-ink-soft);
+    font-size: 0.9375rem;
+  }
+  .field-error {
+    color: #8e2b22;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    margin-top: 0.3rem;
+  }
+  .input {
+    display: block;
+    width: 100%;
+    min-height: 3rem;
+    padding: 0.625rem 0.75rem;
+    background: var(--color-paper);
+    border: 2px solid var(--color-ink);
+    border-radius: var(--radius-field);
+    color: var(--color-ink);
+  }
+  .input[aria-invalid="true"] {
+    border-color: var(--color-tomato);
+    background: #fdf1ee;
+  }
+
+  .link {
+    text-decoration: underline;
+    font-weight: 600;
+  }
+  .link:hover {
+    color: var(--color-tomato);
+  }
+  .on-dark .link:hover {
+    color: var(--color-oil);
+  }
+
+  .slider {
+    width: 100%;
+    accent-color: var(--color-tomato);
+    height: 2rem;
+  }
+
+  .skeleton {
+    background: #231a151a;
+    border-radius: var(--radius-field);
+    animation: pulse 1.4s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    50% {
+      opacity: 0.45;
+    }
+  }
+
+  .spinner {
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    border: 2px solid currentColor;
+    border-right-color: transparent;
+    animation: spin 0.7s linear infinite;
+  }
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* The one moment of motion on the site: the table gets laid when the home page opens. */
+  .lay-plate {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: lay-plate 0.55s cubic-bezier(0.2, 0.9, 0.3, 1.15) backwards;
+  }
+  @keyframes lay-plate {
+    from {
+      opacity: 0;
+      transform: translateY(-34px) scale(1.14);
+    }
+  }
+
+  .seat {
+    transition:
+      fill 0.2s,
+      stroke 0.2s;
+  }
+
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  details > summary {
+    cursor: pointer;
+    list-style: none;
+  }
+  details > summary::-webkit-details-marker {
+    display: none;
+  }
+  details .faq-mark {
+    transition: transform 0.15s;
+  }
+  details[open] .faq-mark {
+    transform: rotate(45deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  /* The carousel stays still and scrolls by hand instead. */
+  .marquee {
+    animation: none;
+  }
+  /* The slideshow stops on its first photo. */
+  .hero-slide {
+    animation: none;
+  }
+  .hero-slide:first-child {
+    opacity: 1;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* On phones, the dock would otherwise sit on top of the keyboard while someone types.
+   Outside the layers so that it beats the dock's own display utility. */
+@media (max-width: 40rem) {
+  body:has(input:not([type="radio"], [type="checkbox"], [type="range"]):focus, textarea:focus, select:focus) .dock {
+    display: none;
+  }
+}
