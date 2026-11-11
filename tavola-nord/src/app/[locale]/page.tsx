@@ -95,7 +95,7 @@ export default async function HomePage({ params }: Props) {
         </div>
 
         {featured.length > 0 ? (
-          <div className="no-scrollbar mt-14 overflow-x-auto">
+          <div className="no-scrollbar mt-14 overflow-x-auto" tabIndex={0} role="region" aria-label={t.home.menuHeading}>
             <ul className="marquee gap-6 px-3">
               {/* The second copy makes the loop seamless and is hidden from screen readers. */}
               {[...featured, ...featured].map((item, index) => (
@@ -115,7 +115,8 @@ export default async function HomePage({ params }: Props) {
       <section className="on-dark bg-tomato text-mist" aria-labelledby="bar-heading">
         <div className="page grid gap-12 py-20 md:grid-cols-2 md:py-28">
           <div>
-            <p className="eyebrow text-oil">{t.home.barEyebrow}</p>
+            {/* Lighter gold so the label stays readable on the red background (WCAG AA). */}
+            <p className="eyebrow text-[#ecd08f]">{t.home.barEyebrow}</p>
             <h2 id="bar-heading" className="display mt-3 text-[clamp(2.25rem,5vw,3.75rem)]">
               {t.home.barHeading}
             </h2>
