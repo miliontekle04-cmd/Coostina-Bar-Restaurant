@@ -21,7 +21,8 @@ export async function sendEmail(email: Email): Promise<void> {
         to: email.to.split(",").map((address) => address.trim()).filter(Boolean),
         subject: email.subject,
         text: email.text,
-        reply_to: email.replyTo,
+        // Guests who reply to their confirmation reach the restaurant inbox.
+        reply_to: email.replyTo ?? restaurantInbox()?.split(",").map((address) => address.trim()).filter(Boolean),
       }),
       signal: AbortSignal.timeout(8000),
     });
