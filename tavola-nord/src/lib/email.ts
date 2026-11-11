@@ -17,7 +17,8 @@ export async function sendEmail(email: Email): Promise<void> {
       headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
       body: JSON.stringify({
         from,
-        to: [email.to],
+        // Several addresses can be given with commas, such as EMAIL_TO_RESTAURANT="a@x.no,b@y.no".
+        to: email.to.split(",").map((address) => address.trim()).filter(Boolean),
         subject: email.subject,
         text: email.text,
         reply_to: email.replyTo,
