@@ -45,6 +45,7 @@ export function restaurantJsonLd(locale: Locale) {
     ...(brand.email ? { email: brand.email } : {}),
     // Lets search engines connect the website to the social profiles once they are added.
     sameAs: brand.socials.flatMap((social) => (social.href ? [social.href] : [])),
+    ...(brand.mapsUrl ? { hasMap: brand.mapsUrl } : {}),
     address: {
       "@type": "PostalAddress",
       streetAddress: brand.address.street,
