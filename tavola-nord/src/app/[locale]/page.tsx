@@ -28,6 +28,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function HomePage({ params }: Props) {
   const { locale } = await params;
   const t = getDictionary(locale);
+  const eventsPhoto = brand.eventsPhoto ?? brand.photos[1] ?? null;
   const now = restaurantNow();
   const [featured, eventMenus, upcoming, closedToday, free] = await Promise.all([
     getFeaturedMenu(),
@@ -188,8 +189,8 @@ export default async function HomePage({ params }: Props) {
 
       <section className="page grid items-center gap-10 py-20 md:grid-cols-2 md:py-28" aria-labelledby="events-heading">
         <div className="relative aspect-[4/3] overflow-hidden bg-lagoon">
-          {brand.photos[1] ? (
-            <Image src={brand.photos[1].src} alt={brand.photos[1].alt[locale]} fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover object-right" />
+          {eventsPhoto ? (
+            <Image src={eventsPhoto.src} alt={eventsPhoto.alt[locale]} fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover" />
           ) : (
             <PlateArt art="antipasti" className="absolute inset-0 m-auto w-1/2" />
           )}
