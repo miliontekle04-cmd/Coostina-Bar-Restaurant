@@ -56,6 +56,11 @@ export const brand = {
     { src: "https://images.pexels.com/photos/9008830/pexels-photo-9008830.jpeg?auto=compress&cs=tinysrgb&fit=crop&crop=top&w=2400&h=1200", alt: { nb: "Venner synger karaoke foran mikrofonen", en: "Friends singing karaoke at the microphone" } },
     { src: "https://images.pexels.com/photos/9005494/pexels-photo-9005494.jpeg?auto=compress&cs=tinysrgb&fit=crop&crop=bottom&w=2400&h=1200", alt: { nb: "Venner danser og ler sammen i baren", en: "Friends dancing and laughing together in the bar" } },
   ] as Photo[],
+  /** The photo beside "Bursdag, firmafest eller kampkveld" on the home page. Falls back to photos[1]. */
+  eventsPhoto: {
+    src: "https://images.pexels.com/photos/9543873/pexels-photo-9543873.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=1600&h=1200",
+    alt: { nb: "Venner feirer bursdag med kake og lys ved bordet", en: "Friends celebrating a birthday with cake and candles at the table" },
+  } as Photo | null,
   /**
    * A short promo shown on the home page. The old film advertised pizza, cocktails, wine and draught beer,
    * which breaks the Norwegian ban on alcohol advertising (alkoholloven § 9-2), so it is switched off.
