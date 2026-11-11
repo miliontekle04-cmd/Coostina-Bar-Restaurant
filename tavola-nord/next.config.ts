@@ -22,6 +22,8 @@ const nextConfig: NextConfig = {
   turbopack: { root: __dirname },
   // PGlite ships a WASM build of Postgres, and pg has optional native code. Neither should be bundled.
   serverExternalPackages: ["@electric-sql/pglite", "pg"],
+  // Stock photos for the home page slideshow (brand.heroPhotos). Next.js fetches, resizes and serves them from this site.
+  images: { remotePatterns: [{ protocol: "https", hostname: "images.pexels.com", pathname: "/photos/**" }] },
   async headers() {
     return [
       {
