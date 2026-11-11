@@ -10,28 +10,28 @@ test.describe("event planner", () => {
     await expect(summary).toContainText("0 of 24 assigned");
     await expect(summary).toContainText("Choose a menu to see the price");
 
-    await page.getByRole("button", { name: "More: The feast" }).click();
-    await page.getByRole("button", { name: "More: The feast" }).click();
+    await page.getByRole("button", { name: "More: Caribbean Feast" }).click();
+    await page.getByRole("button", { name: "More: Caribbean Feast" }).click();
     await expect(summary).toContainText("2 of 24 assigned");
-    await expect(page.getByTestId("estimate")).toHaveText("1,690 kr");
+    await expect(page.getByTestId("estimate")).toHaveText("898 kr");
     await expect(summary).toContainText("22 without a menu");
 
     // Filling the rest uses up the party, so no menu can take more.
     await page.getByRole("button", { name: "Give the rest this menu" }).first().click();
     await expect(summary).toContainText("24 of 24 assigned");
-    await expect(page.getByTestId("estimate")).toHaveText("14,780 kr");
-    await expect(page.getByRole("button", { name: "More: From the garden" })).toBeDisabled();
+    await expect(page.getByTestId("estimate")).toHaveText("8,576 kr");
+    await expect(page.getByRole("button", { name: "More: The Coostina menu" })).toBeDisabled();
 
     // Fewer guests takes people off the last menus first.
     await page.getByLabel("Number of guests", { exact: true }).last().fill("10");
     await page.getByLabel("Number of guests", { exact: true }).last().blur();
     await expect(summary).toContainText("10 of 10 assigned");
-    await expect(page.getByTestId("estimate")).toHaveText("5,950 kr");
+    await expect(page.getByTestId("estimate")).toHaveText("3,490 kr");
 
     // More guests than one table holds adds a table to the plan.
     await page.getByLabel("Number of guests", { exact: true }).last().fill("60");
     await page.getByLabel("Number of guests", { exact: true }).last().blur();
-    await expect(summary).toContainText("3 long tables");
+    await expect(summary).toContainText("5 long tables");
     await expect(summary.locator("circle.seat")).toHaveCount(60);
   });
 
@@ -40,7 +40,7 @@ test.describe("event planner", () => {
     const count = page.getByLabel("Number of guests", { exact: true }).last();
     await count.fill("500");
     await count.blur();
-    await expect(page.getByRole("complementary", { name: "Summary" })).toContainText("120 guests");
+    await expect(page.getByRole("complementary", { name: "Summary" })).toContainText("60 guests");
     await count.fill("1");
     await count.blur();
     await expect(page.getByRole("complementary", { name: "Summary" })).toContainText("10 guests");
@@ -58,7 +58,7 @@ test.describe("event planner", () => {
 
     await page.getByLabel("Date").fill(date);
     await page.getByLabel("Time").selectOption("18:00");
-    await page.getByRole("button", { name: "More: From the fjord" }).click();
+    await page.getByRole("button", { name: "More: Caribbean Feast" }).click();
     await page.getByRole("button", { name: "Give the rest this menu" }).nth(1).click();
     await page.getByLabel("Name").fill("Ola Enquiry");
     await page.getByLabel("Email").fill(guest.email);
@@ -85,8 +85,8 @@ test.describe("event planner", () => {
     await expect(page.getByText(code!)).toBeVisible();
     await expect(page.getByText("Nordmann AS, org.nr. 123456789")).toBeVisible();
     await expect(page.getByText("A 50th birthday")).toBeVisible();
-    // 1 × 745 + 23 × 645
-    await expect(page.getByRole("main")).toContainText("15,580 kr");
+    // 24 × 449
+    await expect(page.getByRole("main")).toContainText("10,776 kr");
 
     await page.getByLabel("Status").selectOption("in_progress");
     await page.getByLabel("Internal note").fill("Called on Monday");
@@ -117,7 +117,7 @@ test.describe("event planner", () => {
       headers,
     });
     expect(tampered.status()).toBe(201);
-    expect((await tampered.json()).estimatedTotalNok).toBe(5950);
+    expect((await tampered.json()).estimatedTotalNok).toBe(3490);
 
     const missing = await request.post("/api/enquiries", { data: { ...base, allocations: [{ menuId: 9999, guests: 5 }] }, headers });
     expect(missing.status()).toBe(400);
@@ -182,18 +182,18 @@ test.describe("admin", () => {
     await adminLogin(page);
 
     await page.goto("/admin/menu");
-    await page.getByRole("button", { name: "Hide Margherita" }).click();
-    await expect(page.getByRole("button", { name: "Show Margherita" })).toBeVisible();
+    await page.getByRole("button", { name: "Hide Mango Salad" }).click();
+    await expect(page.getByRole("button", { name: "Show Mango Salad" })).toBeVisible();
     await page.goto("/en/menu");
-    await expect(page.getByRole("heading", { name: "Margherita" })).toBeHidden();
+    await expect(page.getByRole("heading", { name: "Mango Salad" })).toBeHidden();
 
     await page.goto("/admin/menu");
-    await page.getByRole("button", { name: "Show Margherita" }).click();
-    await expect(page.getByRole("button", { name: "Hide Margherita" })).toBeVisible();
+    await page.getByRole("button", { name: "Show Mango Salad" }).click();
+    await expect(page.getByRole("button", { name: "Hide Mango Salad" })).toBeVisible();
 
     await page.getByRole("link", { name: "Add a dish" }).click();
-    await page.locator('input[name="name"]').fill("Test Lasagne");
-    await page.getByLabel("Category").selectOption("pasta");
+    await page.locator('input[name="name"]').fill("Test Plantain");
+    await page.getByLabel("Category").selectOption("smallPlates");
     await page.getByLabel("Price (kr)").fill("301");
     await page.getByLabel("Description (English)").fill("A dish added in a test.");
     await page.getByLabel("Gluten", { exact: true }).check();
@@ -201,11 +201,11 @@ test.describe("admin", () => {
     await expect(page).toHaveURL(/\/admin\/menu$/);
 
     await page.goto("/en/menu");
-    await expect(page.getByRole("heading", { name: "Test Lasagne" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Test Plantain" })).toBeVisible();
     await expect(page.getByText("301 kr")).toBeVisible();
 
     await page.goto("/admin/menu");
-    await page.getByRole("link", { name: "Test Lasagne" }).click();
+    await page.getByRole("link", { name: "Test Plantain" }).click();
     await page.getByLabel("Price (kr)").fill("305");
     await page.getByRole("button", { name: "Save changes" }).click();
     await expect(page).toHaveURL(/\/admin\/menu$/);
@@ -213,12 +213,12 @@ test.describe("admin", () => {
     await expect(page.getByText("305 kr")).toBeVisible();
 
     await page.goto("/admin/menu");
-    await page.getByRole("link", { name: "Test Lasagne" }).click();
+    await page.getByRole("link", { name: "Test Plantain" }).click();
     await page.getByText("Delete this dish").click();
     await page.getByRole("button", { name: "Delete permanently" }).click();
     await expect(page).toHaveURL(/\/admin\/menu$/);
     await page.goto("/en/menu");
-    await expect(page.getByRole("heading", { name: "Test Lasagne" })).toBeHidden();
+    await expect(page.getByRole("heading", { name: "Test Plantain" })).toBeHidden();
   });
 
   test("changing an event menu price reaches the planner", async ({ page }) => {
@@ -226,16 +226,16 @@ test.describe("admin", () => {
     await adminLogin(page);
     await page.goto("/admin/menu");
     await page.getByLabel("Price per person (kr)").first().fill("600");
-    await page.getByRole("button", { name: "Save The wood oven" }).click();
+    await page.getByRole("button", { name: "Save Island Party" }).click();
     await expect(page.getByRole("status").filter({ hasText: "Saved" })).toBeVisible();
 
     await page.goto("/en/events");
-    await page.getByRole("button", { name: "More: The wood oven" }).click();
+    await page.getByRole("button", { name: "More: Island Party" }).click();
     await expect(page.getByTestId("estimate")).toHaveText("600 kr");
 
     await page.goto("/admin/menu");
-    await page.getByLabel("Price per person (kr)").first().fill("595");
-    await page.getByRole("button", { name: "Save The wood oven" }).click();
+    await page.getByLabel("Price per person (kr)").first().fill("349");
+    await page.getByRole("button", { name: "Save Island Party" }).click();
     await expect(page.getByRole("status").filter({ hasText: "Saved" })).toBeVisible();
   });
 

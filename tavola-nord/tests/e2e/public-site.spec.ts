@@ -41,9 +41,12 @@ test.describe("pages and navigation", () => {
   });
 
   test("header, dock and footer links go to working pages", async ({ page }) => {
+    // The shortcut dock only shows on phones.
+    await page.setViewportSize({ width: 390, height: 844 });
     await page.goto("/en");
     await page.getByRole("navigation", { name: "Shortcuts" }).getByRole("link", { name: "Book a table" }).click();
     await expect(page).toHaveURL(/\/en\/book$/);
+    await page.setViewportSize({ width: 1280, height: 720 });
     await page.getByRole("navigation", { name: "Main menu" }).first().getByRole("link", { name: "About" }).click();
     await expect(page).toHaveURL(/\/en\/about$/);
     await page.getByRole("contentinfo").getByRole("link", { name: "Privacy" }).click();
@@ -98,21 +101,21 @@ test.describe("menu", () => {
   test("filters by allergen, diet and search, and can be cleared", async ({ page }) => {
     await page.goto("/en/menu");
     const count = page.getByTestId("menu-count");
-    await expect(count).toHaveText("34 dishes");
+    await expect(count).toHaveText("13 dishes");
 
     await page.getByText("Gluten", { exact: true }).click();
     await expect(page).toHaveURL(/without=gluten/);
     const glutenFreeCount = await page.getByTestId("menu-item").count();
-    expect(glutenFreeCount).toBeLessThan(34);
-    await expect(page.getByRole("heading", { name: "Margherita" })).toBeHidden();
-    await expect(page.getByRole("heading", { name: "Skrei al Forno" })).toBeVisible();
+    expect(glutenFreeCount).toBeLessThan(13);
+    await expect(page.getByRole("heading", { name: "Saltfish Cakes" })).toBeHidden();
+    await expect(page.getByRole("heading", { name: "Jerk Chicken" })).toBeVisible();
 
     await page.getByRole("button", { name: "Clear filters" }).click();
-    await expect(count).toHaveText("34 dishes");
+    await expect(count).toHaveText("13 dishes");
 
-    await page.getByLabel("Search the menu").fill("reindeer");
-    await expect(count).toHaveText("1 of 34 dishes");
-    await expect(page.getByRole("heading", { name: "Ragù di Reinsdyr" })).toBeVisible();
+    await page.getByLabel("Search the menu").fill("gumbo");
+    await expect(count).toHaveText("1 of 13 dishes");
+    await expect(page.getByRole("heading", { name: "Chicken Gumbo" })).toBeVisible();
   });
 
   test("shows an empty state that gets you out of it", async ({ page }) => {
@@ -120,15 +123,15 @@ test.describe("menu", () => {
     await page.getByLabel("Search the menu").fill("zzzz");
     await expect(page.getByText("No dishes match your filters.")).toBeVisible();
     await page.getByRole("button", { name: "Clear filters" }).first().click();
-    await expect(page.getByTestId("menu-count")).toHaveText("34 dishes");
+    await expect(page.getByTestId("menu-count")).toHaveText("13 dishes");
   });
 
   test("a filtered address can be shared", async ({ page }) => {
     await page.goto("/en/menu?vegetarian=1&without=milk");
     await expect(page.getByLabel("Vegetarian")).toBeChecked();
     await expect(page.getByLabel("Milk")).toBeChecked();
-    await expect(page.getByRole("heading", { name: "Burrata e Rabarbra" })).toBeHidden();
-    await expect(page.getByRole("heading", { name: "Spaghetti Aglio e Olio" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Macaroni Pie" })).toBeHidden();
+    await expect(page.getByRole("heading", { name: "Mango Salad" })).toBeVisible();
   });
 });
 

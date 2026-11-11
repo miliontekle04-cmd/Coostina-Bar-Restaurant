@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { formAlert, freshIp, guest, nextMonday, nextWednesday, useFreshIp, watchErrors } from "./helpers";
+import { adminLogin, formAlert, freshIp, guest, nextWednesday, useFreshIp, watchErrors } from "./helpers";
 
 test.describe("booking a table", () => {
   test("full journey: book, open the manage link, cancel, and the table is free again", async ({ page, request }) => {
@@ -69,10 +69,24 @@ test.describe("booking a table", () => {
   });
 
   test("explains closed days", async ({ page }) => {
+    // Coostina is open every day, so close a date in the admin panel first.
+    await useFreshIp(page);
+    const date = nextWednesday(49);
+    await adminLogin(page);
+    await page.goto("/admin/reservations");
+    await page.getByLabel("Date").nth(1).fill(date);
+    await page.getByLabel("Reason").fill("Closed for test");
+    await page.getByRole("button", { name: "Close this date" }).click();
+    await expect(page.getByText("Closed for test")).toBeVisible();
+
     await page.goto("/en/book");
-    await page.getByLabel("Date").fill(nextMonday(3));
+    await page.getByLabel("Date").fill(date);
     await expect(page.getByText("No times are available that day.")).toBeVisible();
     await expect(page.getByRole("radio")).toHaveCount(0);
+
+    await page.goto("/admin/reservations");
+    await page.getByRole("button", { name: "Reopen" }).click();
+    await expect(page.getByText("Closed for test")).toBeHidden();
   });
 
   test("shows a loading state, then recovers from a failed request with a retry", async ({ page }) => {
@@ -209,7 +223,7 @@ test.describe("booking API", () => {
     const date = nextWednesday(32);
     const statuses: number[] = [];
     for (let i = 0; i < 9; i++) {
-      const response = await request.post("/api/reservations", { data: body(date, { time: `${12 + i}:00` }), headers });
+      const response = await request.post("/api/reservations", { data: body(date, { time: `${14 + i}:00` }), headers });
       statuses.push(response.status());
     }
     expect(statuses.slice(0, 8).every((s) => s === 201)).toBe(true);
