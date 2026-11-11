@@ -3,7 +3,7 @@ import { expect, test } from "@playwright/test";
 import { useFreshIp, watchErrors } from "./helpers";
 
 const pages = [
-  { nb: "/", en: "/en", enHeading: /wood-fired Italian kitchen/ },
+  { nb: "/", en: "/en", enHeading: /Coostina/ },
   { nb: "/meny", en: "/en/menu", enHeading: "Menu" },
   { nb: "/bestill-bord", en: "/en/book", enHeading: "Book a table" },
   { nb: "/selskap", en: "/en/events", enHeading: "Events" },
