@@ -2,7 +2,7 @@
  * Everything specific to the business lives here.
  * Sources: Brønnøysund via proff.no (company, address, phone) and norgeguide.com (hours).
  * Opening hours confirmed by the owner (Nov 2026): 14:00 to 03:00 every day.
- * Set `isDemo` to false once the owner has confirmed the party menus and drink prices in seed-data.ts.
+ * `isDemo` is false: the owner confirmed the opening hours (Nov 2026), so the "provisional" footer note is gone.
  */
 
 export type DayHours = { open: string; close: string } | null;
@@ -19,7 +19,7 @@ export const brand = {
   /** The full name, used in titles and the footer. */
   fullName: "Coostina Bar & Restaurant",
   /** Shows a notice in the footer saying the menu and prices are not confirmed yet. */
-  isDemo: true,
+  isDemo: false,
   legalName: "Coostina AS",
   orgNumber: "924 325 534" as string | null,
   address: { street: "Trondheimsveien 4A", postalCode: "0560", city: "Oslo", country: "NO", area: "Grünerløkka" },
