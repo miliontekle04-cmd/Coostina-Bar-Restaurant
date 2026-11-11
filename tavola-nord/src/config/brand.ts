@@ -47,6 +47,16 @@ export const brand = {
     { src: "/photos/live-sport.jpg", alt: { nb: "Fotballkamp på storskjerm i lokalet", en: "A football match on the big screen" } },
   ] as Photo[],
   /**
+   * The slideshow behind the home page heading. Free stock photos from Pexels (pexels.com/license),
+   * cropped to 2:1 from the top so no alcohol shows (alkoholloven § 9-2).
+   * Falls back to `photos` when empty. Local files in /public/photos work here too.
+   */
+  heroPhotos: [
+    { src: "https://images.pexels.com/photos/9961871/pexels-photo-9961871.jpeg?auto=compress&cs=tinysrgb&fit=crop&crop=top&w=2400&h=1200", alt: { nb: "Glade venner deler mat og ler sammen ved bordet", en: "Happy friends sharing food and laughing at the table" } },
+    { src: "https://images.pexels.com/photos/9008830/pexels-photo-9008830.jpeg?auto=compress&cs=tinysrgb&fit=crop&crop=top&w=2400&h=1200", alt: { nb: "Venner synger karaoke foran mikrofonen", en: "Friends singing karaoke at the microphone" } },
+    { src: "https://images.pexels.com/photos/14856235/pexels-photo-14856235.jpeg?auto=compress&cs=tinysrgb&fit=crop&crop=top&w=2400&h=1200", alt: { nb: "Supportere jubler for fotballkampen på storskjerm", en: "Fans cheering the football match on the big screen" } },
+  ] as Photo[],
+  /**
    * A short promo shown on the home page. The old film advertised pizza, cocktails, wine and draught beer,
    * which breaks the Norwegian ban on alcohol advertising (alkoholloven § 9-2), so it is switched off.
    * Add a new film without alcohol here, such as { src: "/video/new.mp4", poster: "/video/new.jpg" }.
