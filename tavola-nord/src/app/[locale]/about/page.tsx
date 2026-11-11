@@ -53,7 +53,7 @@ export default async function AboutPage({ params }: Props) {
             <Image src={brand.photos[0].src} alt={brand.photos[0].alt[locale]} fill sizes="(min-width: 768px) 20rem, 24rem" className="object-cover" />
           </div>
         ) : (
-          <PlateArt art="pasta" className="w-48 md:w-full" />
+          <PlateArt art="soup" className="w-48 md:w-full" />
         )}
       </div>
 
