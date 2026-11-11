@@ -100,6 +100,11 @@
   }
 
   /* Small spaced capitals above headings, the way a printed menu labels its sections. */
+  /* Keep phone numbers on one line, such as 944 40 443. */
+  a[href^="tel:"] {
+    white-space: nowrap;
+  }
+
   .eyebrow {
     font-size: 0.8125rem;
     font-weight: 600;
