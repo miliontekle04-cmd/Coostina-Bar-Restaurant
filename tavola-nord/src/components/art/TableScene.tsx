@@ -2,11 +2,11 @@ import { PlateArt } from "./PlateArt";
 
 const places = [
   { art: "bread", x: -30, y: 56, size: 190 },
-  { art: "pasta", x: 190, y: 34, size: 230 },
+  { art: "meat", x: 190, y: 34, size: 230 },
   { art: "salad", x: 450, y: 92, size: 180 },
-  { art: "pizza", x: 660, y: 26, size: 270 },
+  { art: "soup", x: 660, y: 26, size: 270 },
   { art: "fish", x: 960, y: 80, size: 200 },
-  { art: "dessert", x: 1190, y: 46, size: 190 },
+  { art: "salad", x: 1190, y: 46, size: 190 },
   { art: "soup", x: 1400, y: 76, size: 210 },
 ];
 
