@@ -122,6 +122,8 @@ export function ChatWidget({ locale }: { locale: Locale }) {
   const t = getDictionary(locale).chat;
   const [open, setOpen] = useState(false);
   const [teaser, setTeaser] = useState(false);
+  // On phones the chat waits until the visitor scrolls, so it never covers the opening text.
+  const [scrolled, setScrolled] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [status, setStatus] = useState<Status>("idle");
@@ -153,6 +155,14 @@ export function ChatWidget({ locale }: { locale: Locale }) {
   }, [open]);
 
   useEffect(() => () => abortRef.current?.abort(), []);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 240);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+  const phoneHidden = scrolled ? "" : "max-sm:hidden";
 
   const hideTeaser = useCallback(() => {
     setTeaser(false);
@@ -391,7 +401,7 @@ export function ChatWidget({ locale }: { locale: Locale }) {
       )}
 
       {teaser && !open && (
-        <div className="fixed bottom-[9.75rem] right-3 z-50 flex max-w-[16rem] items-start gap-1 rounded-2xl rounded-br-sm bg-paper py-2.5 pl-3.5 pr-1.5 text-[0.9375rem] text-ink shadow-[0_8px_24px_#0000004d] ring-1 ring-ink/10 sm:bottom-[6.75rem] sm:right-6">
+        <div className={`${phoneHidden} fixed bottom-[9.75rem] right-3 z-50 flex max-w-[16rem] items-start gap-1 rounded-2xl rounded-br-sm bg-paper py-2.5 pl-3.5 pr-1.5 text-[0.9375rem] text-ink shadow-[0_8px_24px_#0000004d] ring-1 ring-ink/10 sm:bottom-[6.75rem] sm:right-6`}>
           <button type="button" onClick={openChat} className="text-left">
             {t.teaser}
           </button>
@@ -408,7 +418,7 @@ export function ChatWidget({ locale }: { locale: Locale }) {
         aria-expanded={open}
         aria-controls={open ? panelId : undefined}
         aria-label={open ? t.close : t.open}
-        className={`fixed bottom-[5.5rem] right-3 z-50 inline-flex ${open ? "max-sm:hidden" : ""} size-14 items-center justify-center rounded-full bg-lagoon text-oil shadow-[0_8px_24px_#0000004d] ring-1 ring-oil/50 transition-transform hover:scale-105 sm:bottom-6 sm:right-6`}
+        className={`fixed bottom-[5.5rem] right-3 z-50 inline-flex ${open ? "max-sm:hidden" : phoneHidden} size-14 items-center justify-center rounded-full bg-lagoon text-oil shadow-[0_8px_24px_#0000004d] ring-1 ring-oil/50 transition-transform hover:scale-105 sm:bottom-6 sm:right-6`}
       >
         {open ? <CloseIcon className="size-6" /> : <ChatIcon />}
       </button>
