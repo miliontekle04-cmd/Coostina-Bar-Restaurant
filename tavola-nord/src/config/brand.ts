@@ -1,7 +1,7 @@
 /**
  * Everything specific to the business lives here.
  * Sources: Brønnøysund via proff.no (company, address, phone) and norgeguide.com (hours).
- * Opening hours confirmed by the owner (Nov 2026): 13:00 to 03:00 every day.
+ * Opening hours confirmed by the owner (Nov 2026): 14:00 to 03:00 every day.
  * Set `isDemo` to false once the owner has confirmed the party menus and drink prices in seed-data.ts.
  */
 
@@ -57,13 +57,13 @@ export const brand = {
    * A closing time past 24:00 runs into the next morning: "27:00" is 03:00 the night after.
    */
   hours: [
-    { open: "13:00", close: "27:00" },
-    { open: "13:00", close: "27:00" },
-    { open: "13:00", close: "27:00" },
-    { open: "13:00", close: "27:00" },
-    { open: "13:00", close: "27:00" },
-    { open: "13:00", close: "27:00" },
-    { open: "13:00", close: "27:00" },
+    { open: "14:00", close: "27:00" },
+    { open: "14:00", close: "27:00" },
+    { open: "14:00", close: "27:00" },
+    { open: "14:00", close: "27:00" },
+    { open: "14:00", close: "27:00" },
+    { open: "14:00", close: "27:00" },
+    { open: "14:00", close: "27:00" },
   ] as DayHours[],
   timeZone: "Europe/Oslo",
   booking: {
