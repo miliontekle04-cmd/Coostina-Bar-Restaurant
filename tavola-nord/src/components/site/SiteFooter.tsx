@@ -66,8 +66,8 @@ export function SiteFooter({ locale }: { locale: Locale }) {
           <p className="mt-2 text-mist/80">{t.footer.openDaily}</p>
         </div>
       </div>
-      {/* The bottom padding leaves room for the floating dock on phones. */}
-      <div className="page flex flex-wrap justify-between gap-x-8 gap-y-2 border-t border-oil/25 pb-24 pt-5 text-[0.9375rem] text-mist/75 sm:pb-6">
+      {/* Bottom space keeps the chat button and the phone dock from covering these links. */}
+      <div className="page flex flex-wrap justify-between gap-x-8 gap-y-2 border-t border-oil/25 pb-40 pt-5 text-[0.9375rem] text-mist/75 sm:pb-24">
         <p>
           © {new Date().getFullYear()} {brand.legalName}
           {brand.orgNumber ? `, org.nr. ${brand.orgNumber}` : ""}
