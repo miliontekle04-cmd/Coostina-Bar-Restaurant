@@ -125,4 +125,18 @@ describe("cancelling and opening hours", () => {
     expect(isOpenNow({ date: "2026-11-07", minutes: 23 * 60 + 59 }, lateNights)).toBe(true);
     expect(isOpenNow({ date: "2026-11-07", minutes: 10 * 60 }, lateNights)).toBe(false);
   });
+
+  it("stays open past midnight when closing is after 24:00", () => {
+    const toThree = hours.map(() => ({ open: "13:00", close: "27:00" }));
+    expect(isOpenNow({ date: "2026-11-07", minutes: 2 * 60 + 30 }, toThree)).toBe(true);
+    expect(isOpenNow({ date: "2026-11-07", minutes: 3 * 60 }, toThree)).toBe(false);
+    expect(isOpenNow({ date: "2026-11-07", minutes: 12 * 60 }, toThree)).toBe(false);
+    expect(isOpenNow({ date: "2026-11-07", minutes: 23 * 60 }, toThree)).toBe(true);
+  });
+
+  it("stops online bookings at the last seating time", () => {
+    const times = slotTimes({ open: "13:00", close: "27:00" }, { ...rules, lastSeatingTime: "23:00" });
+    expect(times.at(0)).toBe("13:00");
+    expect(times.at(-1)).toBe("23:00");
+  });
 });

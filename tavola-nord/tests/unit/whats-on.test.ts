@@ -14,6 +14,13 @@ const hours = [
 ];
 
 describe("dayStatus", () => {
+  it("is open after midnight when yesterday closes at 03:00", () => {
+    const toThree = hours.map(() => ({ open: "13:00", close: "27:00" }));
+    expect(dayStatus({ date: "2026-11-10", minutes: 90 }, toThree)).toEqual({ state: "open", close: "03:00" });
+    expect(dayStatus({ date: "2026-11-10", minutes: 4 * 60 }, toThree)).toEqual({ state: "later", open: "13:00" });
+    expect(dayStatus({ date: "2026-11-10", minutes: 20 * 60 }, toThree)).toEqual({ state: "open", close: "03:00" });
+  });
+
   // 2026-11-09 is a Monday, 2026-11-10 a Tuesday.
   it("says when the doors open later today", () => {
     expect(dayStatus({ date: "2026-11-09", minutes: 9 * 60 }, hours)).toEqual({ state: "later", open: "11:00" });
