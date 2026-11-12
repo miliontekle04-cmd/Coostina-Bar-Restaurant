@@ -23,8 +23,8 @@ export const brand = {
   legalName: "Coostina AS",
   orgNumber: "924 325 534" as string | null,
   address: { street: "Trondheimsveien 4A", postalCode: "0560", city: "Oslo", country: "NO", area: "Grünerløkka" },
-  phone: { display: "944 40 443", href: "tel:+4794440443" },
-  eventsPhone: { display: "944 40 443", href: "tel:+4794440443" },
+  phone: { display: "+47 412 54 422", href: "tel:+4741254422" },
+  eventsPhone: { display: "+47 412 54 422", href: "tel:+4741254422" },
   /** No public address found. Set it to show email links across the site. */
   email: null as string | null,
   mapsUrl: "https://www.google.com/maps/search/?api=1&query=Coostina+Bar+%26+Restaurant,+Trondheimsveien+4A,+0560+Oslo" as string | null,
